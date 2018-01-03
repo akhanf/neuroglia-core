@@ -12,12 +12,12 @@ echo -n "installing NiftyReg 1.3.9..." #-n without newline
 DEST=$1
 mkdir -p $DEST
 
-D_DIR=$DEST/niftyreg
+NIFTY_VER=1.3.9
+D_DIR=$DEST/niftyreg-$NIFTY_VER
 if [ -d $D_DIR ]; then
 	rm -rf $D_DIR
 fi
 
-NIFTY_VER=1.3.9
 NIFTY_SRC=$D_DIR/src
 NIFTY_DIR=$D_DIR
 

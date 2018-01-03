@@ -83,8 +83,8 @@ export PATH=/opt/mricrogl_lx:$PATH
 export PYTHONPATH=/opt/heudiconv:$PYTHONPATH
 
 #niftyreg
-export LD_LIBRARY_PATH=/opt/niftyreg/lib:$LD_LIBRARY_PATH 
-export PATH=/opt/niftyreg/bin:$PATH
+export LD_LIBRARY_PATH=/opt/niftyreg-1.3.9/lib:$LD_LIBRARY_PATH 
+export PATH=/opt/niftyreg-1.3.9/bin:$PATH
 
 #matlab on graham (requires user to be on sharcnet matlab users list)
 export JAVA_HOME=/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/java/1.8.0_121
