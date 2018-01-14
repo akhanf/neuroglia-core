@@ -26,6 +26,7 @@ bash 03.install_anaconda2_nipype_dcmstack_by_binary.sh /opt
 bash 04.install_octave_sudo.sh 
 bash 10.install_afni_fsl_sudo.sh
 bash 12.install_c3d_by_binary.sh /opt
+bash 15.install_freesurfer_minimal_by_binary.sh /opt
 bash 16.install_ants_by_binary.sh /opt
 bash 17.install_dcm2niix_by_binary.sh /opt
 bash 23.install_heudiconv_by_source.sh /opt
@@ -92,4 +93,9 @@ export MLM_LICENSE_FILE=/cvmfs/restricted.computecanada.ca/config/licenses/matla
 export PATH=/cvmfs/restricted.computecanada.ca/easybuild/software/2017/Core/matlab/2017a:/cvmfs/restricted.computecanada.ca/easybuild/software/2017/Core/matlab/2017a/bin:/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/java/1.8.0_121:/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/java/1.8.0_121/bin:$PATH
 export _JAVA_OPTIONS=-Xmx256m
 export LIBRARY_PATH=/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/java/1.8.0_121/lib
+
+#freesurfer - minimal
+export FREESURFER_HOME=/opt/freesurfer_minimal
+export PATH=$FREESURFER_HOME/bin:$PATH
+
 
