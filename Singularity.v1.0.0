@@ -13,12 +13,24 @@ From: ubuntu:xenial
 #########
 %setup
 #########
-cp ./install_scripts/*.sh $SINGULARITY_ROOTFS
+mkdir -p $SINGULARITY_ROOTFS/src
+cp -Rv . $SINGULARITY_ROOTFS/src
 
 #########
 %post
 #########
 
+cd /src
+
+# checkout specific git release 
+SINGULARITY_TAG=${SINGULARITY_BUILDDEF#Singularity.}
+if [ ! "$SINGULARITY_TAG" = "Singularity" ]
+then
+  sudo apt-get -y install git
+  git checkout $SINGULARITY_TAG
+fi
+
+cd /src/install_scripts
 
 export DEBIAN_FRONTEND=noninteractive
 bash 00.install_basics_sudo.sh
@@ -26,6 +38,7 @@ bash 03.install_anaconda2_nipype_dcmstack_by_binary.sh /opt
 bash 04.install_octave_sudo.sh 
 bash 10.install_afni_fsl_sudo.sh
 bash 12.install_c3d_by_binary.sh /opt
+bash 15.install_freesurfer_minimal_by_binary.sh /opt
 bash 16.install_ants_by_binary.sh /opt
 bash 17.install_dcm2niix_by_binary.sh /opt
 bash 23.install_heudiconv_by_source.sh /opt
@@ -35,7 +48,7 @@ bash 25.install_niftyreg_by_source.sh /opt
 
 
 #remove all install scripts
-rm *.sh
+rm -rf /src
 
 
 #########
@@ -83,8 +96,8 @@ export PATH=/opt/mricrogl_lx:$PATH
 export PYTHONPATH=/opt/heudiconv:$PYTHONPATH
 
 #niftyreg
-export LD_LIBRARY_PATH=/opt/niftyreg/lib:$LD_LIBRARY_PATH 
-export PATH=/opt/niftyreg/bin:$PATH
+export LD_LIBRARY_PATH=/opt/niftyreg-1.3.9/lib:$LD_LIBRARY_PATH 
+export PATH=/opt/niftyreg-1.3.9/bin:$PATH
 
 #matlab on graham (requires user to be on sharcnet matlab users list)
 export JAVA_HOME=/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/java/1.8.0_121
@@ -92,4 +105,9 @@ export MLM_LICENSE_FILE=/cvmfs/restricted.computecanada.ca/config/licenses/matla
 export PATH=/cvmfs/restricted.computecanada.ca/easybuild/software/2017/Core/matlab/2017a:/cvmfs/restricted.computecanada.ca/easybuild/software/2017/Core/matlab/2017a/bin:/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/java/1.8.0_121:/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/java/1.8.0_121/bin:$PATH
 export _JAVA_OPTIONS=-Xmx256m
 export LIBRARY_PATH=/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/java/1.8.0_121/lib
+
+#freesurfer - minimal
+export FREESURFER_HOME=/opt/freesurfer_minimal
+export PATH=$FREESURFER_HOME/bin:$PATH
+
 

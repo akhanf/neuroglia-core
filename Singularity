@@ -13,12 +13,24 @@ From: ubuntu:xenial
 #########
 %setup
 #########
-cp ./install_scripts/*.sh $SINGULARITY_ROOTFS
+mkdir -p $SINGULARITY_ROOTFS/src
+cp -Rv . $SINGULARITY_ROOTFS/src
 
 #########
 %post
 #########
 
+cd /src
+
+# checkout specific git release 
+SINGULARITY_TAG=${SINGULARITY_BUILDDEF#Singularity.}
+if [ ! "$SINGULARITY_TAG" = "Singularity" ]
+then
+  sudo apt-get -y install git
+  git checkout $SINGULARITY_TAG
+fi
+
+cd /src/install_scripts
 
 export DEBIAN_FRONTEND=noninteractive
 bash 00.install_basics_sudo.sh
@@ -36,7 +48,7 @@ bash 25.install_niftyreg_by_source.sh /opt
 
 
 #remove all install scripts
-rm *.sh
+rm -rf /src
 
 
 #########
