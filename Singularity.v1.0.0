@@ -26,7 +26,7 @@ cd /src
 SINGULARITY_TAG=${SINGULARITY_BUILDDEF#Singularity.}
 if [ ! "$SINGULARITY_TAG" = "Singularity" ]
 then
-  sudo apt-get -y install git
+  apt-get install -y git
   git checkout $SINGULARITY_TAG
 fi
 
