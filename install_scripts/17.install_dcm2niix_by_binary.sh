@@ -17,7 +17,7 @@ mkdir -p $D_DIR
 
 #install software
 RANDOM_TEMP=${RANDOM}
-wget https://www.dropbox.com/s/elg1t4fm3zp4qxg/mricrogl_linux.zip?dl=0 -O ${RANDOM_TEMP}.zip;unzip -o ${RANDOM_TEMP}.zip -d ${D_DIR}; rm ${RANDOM_TEMP}.zip
+wget https://www.dropbox.com/s/7fcmhwf9p87sn29/mricrogl_linux.zip?dl=0 -O ${RANDOM_TEMP}.zip;unzip -o ${RANDOM_TEMP}.zip -d ${D_DIR}; rm ${RANDOM_TEMP}.zip
 
 if [ -e $HOME/.profile ]; then #ubuntu
 	PROFILE=$HOME/.profile
