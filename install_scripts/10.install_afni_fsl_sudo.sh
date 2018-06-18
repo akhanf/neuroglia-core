@@ -24,8 +24,8 @@ sudo apt-get install -y --allow-unauthenticated afni
 #install fsl
 #wget -O- http://neuro.debian.net/lists/trusty.de-md.full | sudo tee /etc/apt/sources.list.d/neurodebian.sources.list
 #sudo apt-key adv --recv-keys --keyserver pgp.mit.edu 2649A5A9
-#sudo apt-get update
-#sudo apt-get install -y --allow-unauthenticated fsl #this will install atalas too
+sudo apt-get update
+sudo apt-get install -y --allow-unauthenticated fsl #this will install atalas too
 
 
 if [ -e $HOME/.profile ]; then #ubuntu
