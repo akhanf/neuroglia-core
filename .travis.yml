@@ -1,0 +1,22 @@
+sudo: required
+
+services:
+  - docker
+
+install:
+        - echo "Building container"
+        - echo docker build -t $TRAVIS_REPO_SLUG.$TRAVIS_BUILD_NUMBER
+
+
+script:
+        - echo "Run tests here"
+
+
+         
+after_success:
+        - echo "Tests successful, push to docker hub"
+        - echo docker login -u $DOCKER_USER -p $DOCKER_PASS
+        - export DOCKER_NAME=$TRAVIS_REPO_SLUG.$TRAVIS_BUILD_NUMBER
+        - echo docker push $DOCKER_NAME
+        - echo docker tag $DOCKER_NAME $ORG/$NAME:latest
+        - echo docker push $ORG/$NAME:latest
