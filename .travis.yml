@@ -13,7 +13,7 @@ env:
 
 install:
         - echo "Building container"
-        - docker build -t $DOCKER_NAME
+        - docker build -t $TRAVIS_REPO_SLUG:$BUILD_TAG
 
 
 script:
@@ -23,6 +23,6 @@ script:
 after_success:
         - echo "Tests successful, push to docker hub"
         - docker login -u $DOCKER_USER -p $DOCKER_PASS
-        - docker push $DOCKER_NAME
-        - docker tag $DOCKER_NAME $DOCKER_LATEST
-        - docker push $DOCKER_LATEST
+        - docker push $TRAVIS_REPO_SLUG:$BUILD_TAG
+        - docker tag $TRAVIS_REPO_SLUG:$BUILD_TAG $TRAVIS_REPO_SLUG:latest
+        - docker push $TRAVIS_REPO_SLUG:latest
