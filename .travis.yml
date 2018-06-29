@@ -11,10 +11,8 @@ env:
 
 install:
         - echo "Building container"
-        - docker build -t $BUILD_TAG $TRAVIS_REPO_SLUG
+        - docker build -t $TRAVIS_REPO_SLUG:$BUILD_TAG .
         
-
-
 script:
         - echo "Run tests here"
 
