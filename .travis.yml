@@ -13,7 +13,7 @@ env:
 
 install:
         - echo "Building container"
-        - echo docker build -t $DOCKER_NAME
+        - docker build -t $DOCKER_NAME
 
 
 script:
@@ -22,7 +22,7 @@ script:
          
 after_success:
         - echo "Tests successful, push to docker hub"
-        - echo docker login -u $DOCKER_USER -p $DOCKER_PASS
-        - echo docker push $DOCKER_NAME
-        - echo docker tag $DOCKER_NAME $DOCKER_LATEST
-        - echo docker push $DOCKER_LATEST
+        - docker login -u $DOCKER_USER -p $DOCKER_PASS
+        - docker push $DOCKER_NAME
+        - docker tag $DOCKER_NAME $DOCKER_LATEST
+        - docker push $DOCKER_LATEST
