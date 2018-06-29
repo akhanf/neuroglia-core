@@ -8,12 +8,11 @@ services:
 env:
         BASE_VERSION=v1.3.3
         BUILD_TAG=$BASE_VERSION.$TRAVIS_BUILD_NUMBER
-        DOCKER_NAME="$TRAVIS_REPO_SLUG:$BUILD_TAG"
-        DOCKER_LATEST="$TRAVIS_REPO_SLUG:latest"
 
 install:
         - echo "Building container"
-        - docker build -t $TRAVIS_REPO_SLUG:$BASE_VERSION.$TRAVIS_BUILD_NUMBER
+        - docker build -t $BUILD_TAG $TRAVIS_REPO_SLUG
+        
 
 
 script:
@@ -23,6 +22,6 @@ script:
 after_success:
         - echo "Tests successful, push to docker hub"
         - docker login -u $DOCKER_USER -p $DOCKER_PASS
-        - docker push $TRAVIS_REPO_SLUG:$BASE_VERSION.$TRAVIS_BUILD_NUMBER
-        - docker tag $TRAVIS_REPO_SLUG:$BASE_VERSION.$TRAVIS_BUILD_NUMBER $TRAVIS_REPO_SLUG:latest
+        - docker push $TRAVIS_REPO_SLUG:$BUILD_TAG
+        - docker tag $TRAVIS_REPO_SLUG:$BUILD_TAG $TRAVIS_REPO_SLUG:latest
         - docker push $TRAVIS_REPO_SLUG:latest
