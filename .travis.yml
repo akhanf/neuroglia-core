@@ -1,22 +1,28 @@
+dist: trusty
 sudo: required
+language: python
 
 services:
   - docker
 
+env:
+        BASE_VERSION=v1.3.3
+        BUILD_TAG=$BASE_VERSION.$TRAVIS_BUILD_NUMBER
+        DOCKER_NAME="$TRAVIS_REPO_SLUG:$BUILD_TAG"
+        DOCKER_LATEST="$TRAVIS_REPO_SLUG:latest"
+
 install:
         - echo "Building container"
-        - echo docker build -t $TRAVIS_REPO_SLUG.$TRAVIS_BUILD_NUMBER
+        - echo docker build -t $DOCKER_NAME
 
 
 script:
         - echo "Run tests here"
 
-
          
 after_success:
         - echo "Tests successful, push to docker hub"
         - echo docker login -u $DOCKER_USER -p $DOCKER_PASS
-        - export DOCKER_NAME=$TRAVIS_REPO_SLUG.$TRAVIS_BUILD_NUMBER
         - echo docker push $DOCKER_NAME
-        - echo docker tag $DOCKER_NAME $ORG/$NAME:latest
-        - echo docker push $ORG/$NAME:latest
+        - echo docker tag $DOCKER_NAME $DOCKER_LATEST
+        - echo docker push $DOCKER_LATEST
