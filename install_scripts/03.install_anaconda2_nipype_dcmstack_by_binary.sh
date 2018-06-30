@@ -21,7 +21,7 @@ apt-get install -y bzip2
 
 INST_FILE=Anaconda2-4.2.0-Linux-x86_64.sh
 #-P: prefix, where there file will be save to
-wget -P $ANACONDA2_DIR --tries=10 https://repo.continuum.io/archive/$INST_FILE 
+wget -nv -P $ANACONDA2_DIR --tries=10 https://repo.continuum.io/archive/$INST_FILE 
 #-b:bacth mode, -f: no error if install prefix already exists
 bash $ANACONDA2_DIR/$INST_FILE -b -f -p $ANACONDA2_DIR
 rm $ANACONDA2_DIR/$INST_FILE
