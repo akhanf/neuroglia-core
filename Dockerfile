@@ -5,19 +5,19 @@ RUN mkdir -p /src/install_scripts
 COPY install_scripts/ /src/install_scripts
 
 ENV DEBIAN_FRONTEND noninteractive
-RUN bash /src/install_scripts/00.install_basics_sudo.sh
-RUN bash /src/install_scripts/03.install_anaconda2_nipype_dcmstack_by_binary.sh /opt
-RUN bash /src/install_scripts/04.install_octave_sudo.sh 
-RUN bash /src/install_scripts/10.install_afni_fsl_sudo.sh
-RUN python /src/install_scripts/fslinstaller.py -d /opt/fsl
-RUN bash /src/install_scripts/12.install_c3d_by_binary.sh /opt
-RUN bash /src/install_scripts/15.install_freesurfer_minimal_by_binary.sh /opt
-RUN bash /src/install_scripts/16.install_ants_by_binary.sh /opt
-RUN bash /src/install_scripts/17.install_dcm2niix_by_binary.sh /opt
-RUN bash /src/install_scripts/23.install_heudiconv_by_source.sh /opt
-RUN bash /src/install_scripts/24.install_bids-validator_sudo.sh
-RUN bash /src/install_scripts/25.install_niftyreg_by_source.sh /opt
-RUN bash /src/install_scripts/28.install_gradunwarp_by_source.sh /opt
+RUN bash /src/install_scripts/00.install_basics_sudo.sh > log_00_basics
+RUN bash /src/install_scripts/03.install_anaconda2_nipype_dcmstack_by_binary.sh /opt > log_03_python
+RUN bash /src/install_scripts/04.install_octave_sudo.sh  > log_04_octave
+RUN bash /src/install_scripts/10.install_afni_fsl_sudo.sh > log_10_afni
+RUN python /src/install_scripts/fslinstaller.py -d /opt/fsl > log_11_fsl
+RUN bash /src/install_scripts/12.install_c3d_by_binary.sh /opt > log_12_c3d
+RUN bash /src/install_scripts/15.install_freesurfer_minimal_by_binary.sh /opt > log_15_freesurferminimal
+RUN bash /src/install_scripts/16.install_ants_by_binary.sh /opt > log_16_ants
+RUN bash /src/install_scripts/17.install_dcm2niix_by_binary.sh /opt > log_17_dcm2niix
+RUN bash /src/install_scripts/23.install_heudiconv_by_source.sh /opt > log_23_heudiconv
+RUN bash /src/install_scripts/24.install_bids-validator_sudo.sh > log_24_bids-validator
+RUN bash /src/install_scripts/25.install_niftyreg_by_source.sh /opt > log_25_niftyreg
+RUN bash /src/install_scripts/28.install_gradunwarp_by_source.sh /opt > log_28_gradunwarp
 
 
 #remove all install scripts
