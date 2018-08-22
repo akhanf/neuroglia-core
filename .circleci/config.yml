@@ -22,7 +22,7 @@ jobs:
           name: Running Tests
           command: |
               export DOCKER_NAME=$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:$VERSION.$CIRCLE_BUILD_NUM
-              docker exec -it $DOCKER_NAME flirt 
+              docker run -it $DOCKER_NAME flirt 
       - run:
           name: Pushing build to docker hub
           command: |
@@ -33,11 +33,18 @@ jobs:
             docker push $DOCKER_LATEST
             docker push $DOCKER_NAME
       - run:
-          name: Pushing latest to singularity hub 
+          name: Pushing latest to singularity hub test
           command: |
             git config --global user.email $GH_EMAIL
             git config --global user.name $GH_NAME
             echo "" >> Singularity
             git add Singularity
             git commit -m "shub build latest [skip ci]"
-            #            git push 
+            git push -q https://${GITHUB_TOKEN}@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs: 
+      - build:
+          context: org-global
