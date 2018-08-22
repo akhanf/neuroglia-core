@@ -22,7 +22,7 @@ jobs:
           name: Running Tests
           command: |
               export DOCKER_NAME=$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:$VERSION.$CIRCLE_BUILD_NUM
-              docker run -it $DOCKER_NAME flirt 
+              docker run -it $DOCKER_NAME flirt -version
       - run:
           name: Pushing build to docker hub
           command: |
