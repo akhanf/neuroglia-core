@@ -23,7 +23,7 @@ Commits and pull-requests to this repository rebuild the `latest` version on Doc
 [![https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg](https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg)](https://singularity-hub.org/collections/393)
 
 Docker:
-`docker pull khanlab/neuroglia-dwi`
+`docker pull khanlab/neuroglia-core`
 
 Singularity:
-`singularity pull khanlab/neuroglia-dwi`
+`singularity pull khanlab/neuroglia-core`
