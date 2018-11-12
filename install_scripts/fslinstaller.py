@@ -32,7 +32,7 @@ code = locale.getpreferredencoding()
 try:
     import json
     HAS_JSON = True
-except:
+except Exception:
     HAS_JSON = False
 
 fsli_C_FAILED = 1
@@ -167,10 +167,12 @@ class Version(object):
         return True
 
 
-version = Version('3.0.11')
+version = Version('3.0.12')
 
 
-def memoize(f, cache={}):
+def memoize(f):
+    cache = f.cache = {}
+
     def g(*args, **kwargs):
         key = (f, tuple(args), frozenset(kwargs.items()))
         if key not in cache:
@@ -384,7 +386,7 @@ def run_cmd_dropstdout(command, as_root=False):
             cmd.stdin.write(sudo_pwd + '\n')
             cmd.stdin.flush()
         (_, error) = cmd.communicate()
-    except:
+    except Exception:
         raise
     finally:
         my_spinner.stop()
@@ -416,7 +418,7 @@ def run_cmd(command, as_root=False):
             cmd.stdin.write(sudo_pwd + '\n')
             cmd.stdin.flush()
         (output, error) = cmd.communicate()
-    except:
+    except Exception:
         raise
     finally:
         my_spinner.stop()
@@ -655,7 +657,7 @@ def move_file(from_file, to_file, requires_root=False):
                     os.remove(from_file)
             else:
                 raise
-        except:
+        except Exception:
             raise
 
 
@@ -963,7 +965,7 @@ def download_file(url, localf, timeout=20):
         try:
             try:
                 lf = open(localf, 'ab')
-            except:
+            except Exception:
                 raise DownloadFileError("Failed to create temporary file.")
 
             while True:
@@ -1383,46 +1385,25 @@ def get_releases(server_url):
         raise UnsupportedOs("%s %s not supported by this installer" % (
             computer.o_s, computer.vendor
         ))
-    if 'alias' in os_definition.keys():
-        t_version = computer.version.major
-        while t_version > 0:
-            MsgUser.debug("Trying version %s" % (t_version))
-            try:
-                os_parent = os_definition['alias'][
-                        str(t_version)]['parent']
-                break
-            except KeyError:
-                MsgUser.debug("...not found")
-                if t_version == (computer.version.major - 1):
-                    MsgUser.warning(
-                        "%s %s not officially supported "
-                        "- trying to locate support for an earlier version - "
-                        "this may not work" % (
-                            computer.vendor, computer.version.major))
-                t_version -= 1
-        if t_version == 0:
-            raise UnsupportedOs("%s %s not supported" % (
-                computer.vendor,
-                str(computer.version.major)
-            ))
-        os_definition = manifest[computer.o_s][os_parent]
+    t_version = computer.version.major
+    alias_t = 'alias'
+    if alias_t in os_definition.keys():
+        if str(t_version) in os_definition[alias_t]:
+            os_parent = os_definition[alias_t][
+                            str(t_version)]['parent']
+            os_definition = manifest[computer.o_s][os_parent]
+
     if computer.arch not in os_definition.keys():
         raise UnsupportedOs("%s %s not supported" % (
                                 computer.vendor,
                                 computer.arch
-                             ))
-    os_versions = os_definition[computer.arch]
-    t_version = computer.version.major
+                            ))
+
+    os_def = os_definition[computer.arch]
     while t_version > 0:
         MsgUser.debug("Trying version %s" % (t_version))
-        if str(t_version) not in os_versions.keys():
+        if str(t_version) not in os_def.keys():
             MsgUser.debug("...not found")
-            if t_version == (computer.version.major - 1):
-                MsgUser.warning(
-                    "%s %s not officially supported "
-                    "- trying to locate support for an earlier version - "
-                    "this may not work" % (
-                            computer.vendor, computer.version.major))
             t_version -= 1
         else:
             break
@@ -1431,7 +1412,13 @@ def get_releases(server_url):
                                 computer.vendor,
                                 computer.version.major
                                 ))
-    return os_versions[str(t_version)]
+    elif t_version != computer.version.major:
+        MsgUser.warning(
+                        "%s %s not officially supported "
+                        "- trying to locate support for an earlier "
+                        "version - this may not work" % (
+                                computer.vendor, computer.version.major))
+    return os_definition[computer.arch][str(t_version)]
 
 
 class ExtraDownloadError(Exception):
@@ -1836,7 +1823,7 @@ def download_release(
                         "Erasing existing file %s" % local_filename)
                     try:
                         os.remove(local_filename)
-                    except:
+                    except Exception:
                         raise DownloadError(
                             "Unabled to remove local file %s - remove"
                             " it and try again" % local_filename)
