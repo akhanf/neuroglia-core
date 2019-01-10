@@ -18,7 +18,7 @@ RUN bash /src/install_scripts/23.install_heudiconv_by_source.sh /opt > log_23_he
 RUN bash /src/install_scripts/24.install_bids-validator_sudo.sh > log_24_bids-validator
 RUN bash /src/install_scripts/25.install_niftyreg_by_source.sh /opt > log_25_niftyreg
 RUN bash /src/install_scripts/28.install_gradunwarp_by_source.sh /opt > log_28_gradunwarp
-RUN bash /src/install_scripts/29.install_connectomeworkbench_by_binary.sh > log_29_workbench
+RUN bash /src/install_scripts/29.install_connectomeworkbench_by_binary.sh /opt > log_29_workbench
 
 
 #remove all install scripts
@@ -67,7 +67,6 @@ ENV LIBRARY_PATH /cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/java/
 #freesurfer - minimal
 ENV FREESURFER_HOME /opt/freesurfer_minimal
 ENV PATH $FREESURFER_HOME/bin:$PATH
-
 
 #connectome workbench 
 ENV PATH /opt/workbench/bin_linux64:$PATH
