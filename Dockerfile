@@ -19,6 +19,7 @@ RUN bash /src/install_scripts/24.install_bids-validator_sudo.sh > log_24_bids-va
 RUN bash /src/install_scripts/25.install_niftyreg_by_source.sh /opt > log_25_niftyreg
 RUN bash /src/install_scripts/28.install_gradunwarp_by_source.sh /opt > log_28_gradunwarp
 RUN bash /src/install_scripts/29.install_connectomeworkbench_by_binary.sh /opt > log_29_workbench
+RUN bash /src/install_scripts/30.install_datalad-osf_by_source_sudo.sh /opt > log_30_dataladosf
 
 
 #remove all install scripts
