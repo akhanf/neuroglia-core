@@ -16,6 +16,8 @@ Singularity image for neuroimaging dependencies. Base image for khanlab apps and
 * NiftyReg
 * gradunwarp
 * dcmstack
+* Connectome Workbench
+* Datalad-osf
 
 Commits and pull-requests to this repository rebuild the `latest` version on Docker Hub, which is updated nightly to Singularity Hub. Releases on Docker Hub and Singularity Hub are built whenever a tag named `v.*` is committed. To avoid re-building on minor commits (e.g. changes to documentation), use `[skip ci]` in the commit message.
 
